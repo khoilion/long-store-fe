@@ -22,7 +22,7 @@ const Newsletter = () => {
         }
 
         try {
-            toast.success("Newsletter subscribed!");
+            toast.success("Đã đăng ký nhận bản tin !");
             setEmail("");
             setIsValidEmail(true);
         } catch (e) {
@@ -43,15 +43,14 @@ const Newsletter = () => {
                     />
                     <div
                         className="absolute -z-1 max-w-[523px] max-h-[243px] w-full h-full right-0 top-0 bg-gradient-1"/>
-
                     <div
                         className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 px-4 sm:px-7.5 xl:pl-12.5 xl:pr-14 py-11">
                         <div className="max-w-[491px] w-full">
                             <h2 className="max-w-[399px] text-white font-bold text-lg sm:text-xl xl:text-heading-4 mb-3">
-                                Don&apos;t Miss Out Latest Trends & Offers
+                                Đừng bỏ lỡ xu hướng và ưu đãi mới nhất
                             </h2>
                             <p className="text-white">
-                                Register to receive news about the latest offers & discount codes
+                                Đăng ký để nhận tin tức về các ưu đãi và mã giảm giá mới nhất
                             </p>
                         </div>
 
@@ -62,7 +61,7 @@ const Newsletter = () => {
                                         type="email"
                                         name="email"
                                         id="email"
-                                        placeholder="Enter your email"
+                                        placeholder="Nhập email của bạn"
                                         value={email}
                                         onChange={(e) => {
                                             setEmail(e.target.value);
@@ -79,7 +78,7 @@ const Newsletter = () => {
                                     </button>
                                 </div>
                                 {!isValidEmail && (
-                                    <p className="text-red-500 mt-2">Please enter a valid email format.</p>
+                                    <p className="text-red-500 mt-2">Vui lòng nhập định dạng email hợp lệ !</p>
                                 )}
                             </form>
                         </div>
