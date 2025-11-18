@@ -20,7 +20,7 @@ const ShopWithoutSidebar = () => {
   return (
     <>
       <Breadcrumb
-        title={"Explore All Products"}
+        title={"Khám phá tất cả sản phẩm"}
         pages={["shop", "/", "shop without sidebar"]}
       />
       <section className="overflow-hidden relative pb-20 pt-5 lg:pt-20 xl:pt-28 bg-[#f3f4f6]">

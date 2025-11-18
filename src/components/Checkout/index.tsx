@@ -63,7 +63,7 @@ const Checkout = () => {
                       </div>
                       <div>
                         <h4 className="font-medium text-dark text-right">
-                          Subtotal
+                            Tổng phụ
                         </h4>
                       </div>
                     </div>

@@ -100,7 +100,7 @@ const Cart = () => {
               </svg>
             </div>
 
-            <p className="pb-6">Your cart is empty!</p>
+            <p className="pb-6">Giỏ hàng của bạn đang trống!</p>
 
             <Link
               href="/shop-with-sidebar"

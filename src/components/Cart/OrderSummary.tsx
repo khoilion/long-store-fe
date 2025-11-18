@@ -22,7 +22,7 @@ const OrderSummary = () => {
               <h4 className="font-medium text-dark">Product</h4>
             </div>
             <div>
-              <h4 className="font-medium text-dark text-right">Subtotal</h4>
+              <h4 className="font-medium text-dark text-right">Tổng phụ</h4>
             </div>
           </div>
 
