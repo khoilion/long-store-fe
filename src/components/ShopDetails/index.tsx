@@ -130,8 +130,8 @@ const ShopDetails = () => {
                       </button>
 
                       <Image
-                        src={product.imgs?.previews[previewImg]}
-                        alt="products-details"
+                          src={product.imgs?.previews[previewImg] || '/default-image.jpg'}
+                          alt="products-details"
                         width={400}
                         height={400}
                       />
