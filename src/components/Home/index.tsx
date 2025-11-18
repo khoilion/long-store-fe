@@ -9,18 +9,18 @@ import Testimonials from "./Testimonials";
 import Newsletter from "../Common/Newsletter";
 
 const Home = () => {
-  return (
-    <main>
-      <Hero />
-      <Categories />
-      <NewArrival />
-      <PromoBanner />
-      <BestSeller />
-      <CounDown />
-      <Testimonials />
-      <Newsletter />
-    </main>
-  );
+    return (
+        <main>
+            <Hero/>
+            <Categories/>
+            <NewArrival/>
+            <PromoBanner/>
+            <BestSeller/>
+            <CounDown/>
+            <Testimonials/>
+            <Newsletter/>
+        </main>
+    );
 };
 
 export default Home;
