@@ -1,43 +1,43 @@
 const data = [
     {
-        title: "Tivi",
+        title: "Nổi bật",
         id: 1,
-        img: "/images/categories/categories-01.png",
+        img: "/images/categories/coll_1.webp",
     },
     {
-        title: "Laptop & PC",
+        title: "Phụ kiện",
         id: 2,
-        img: "/images/categories/categories-02.png",
+        img: "/images/categories/coll_2.webp",
     },
     {
-        title: "Điện thoại di động & Máy tính bảng",
+        title: "Điện thoại di động",
         id: 3,
-        img: "/images/categories/categories-03.png",
+        img: "/images/categories/coll_3.webp",
     },
     {
-        title: "Games & Videos",
+        title: "Tai nghe",
         id: 4,
-        img: "/images/categories/categories-04.png",
+        img: "/images/categories/coll_4.webp",
     },
     {
-        title: "Thiết bị gia dụng",
+        title: "Sạc dự phòng",
         id: 5,
-        img: "/images/categories/categories-05.png",
+        img: "/images/categories/coll_5.webp",
     },
     {
-        title: "Sức khỏe & Thể thao",
+        title: "Loa bluetooth",
         id: 6,
-        img: "/images/categories/categories-06.png",
+        img: "/images/categories/coll_6.webp",
     },
     {
-        title: "Đồng hồ",
+        title: "Ốp lưng",
         id: 7,
-        img: "/images/categories/categories-07.png",
+        img: "/images/categories/coll_7.webp",
     },
     {
-        title: "Tivi",
+        title: "Củ sạc",
         id: 8,
-        img: "/images/categories/categories-04.png",
+        img: "/images/categories/coll_8.webp",
     },
 ];
 
