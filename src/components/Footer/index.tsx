@@ -238,17 +238,17 @@ const Footer = () => {
 
                         <ul className="flex flex-col gap-3.5">
                             <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
+                                <a className="ease-out duration-200 hover:text-blue" href="/cart">
                                     Giỏ hàng
                                 </a>
                             </li>
                             <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
+                                <a className="ease-out duration-200 hover:text-blue" href="/wishlist">
                                     Danh sách yêu thích
                                 </a>
                             </li>
                             <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
+                                <a className="ease-out duration-200 hover:text-blue" href="/shop-with-sidebar">
                                     Cửa hàng
                                 </a>
                             </li>
@@ -261,21 +261,6 @@ const Footer = () => {
                         </h2>
 
                         <ul className="flex flex-col gap-3">
-                            <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
-                                    Chính sách bảo mật
-                                </a>
-                            </li>
-                            <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
-                                    Điều khoản
-                                </a>
-                            </li>
-                            <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="#">
-                                    FAQ’s
-                                </a>
-                            </li>
                             <li>
                                 <a className="ease-out duration-200 hover:text-blue" href="/contact">
                                     Liên hệ
