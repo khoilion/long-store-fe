@@ -1,12 +1,13 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../Common/Breadcrumb";
-import {SiNamecheap} from "react-icons/si";
-import {FaPhoneAlt} from "react-icons/fa";
-import {FaLocationDot} from "react-icons/fa6";
-import {MdEmail} from "react-icons/md";
-import {toast} from "react-hot-toast";
+import { SiNamecheap } from "react-icons/si";
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -17,25 +18,26 @@ const Contact = () => {
     });
 
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const storeInfo = [
-        {icon: <SiNamecheap size={20}/>, text: "Tên cửa hàng: Long Store"},
-        {icon: <FaPhoneAlt size={20}/>, text: "Điện thoại: 1234 567890"},
-        {icon: <MdEmail size={20}/>, text: "Email: zluffyz2002@gmail.com"},
-        {icon: <FaLocationDot size={20}/>, text: "332 Đ. Nguyễn Trãi, Thanh Xuân, Hà Nội"},
-        {icon: <FaLocationDot size={20}/>, text: "161 Đ. Nguyễn Trãi, Thanh Xuân, Hà Nội"},
-        {icon: <FaLocationDot size={20}/>, text: "137 P. Minh Khai, Hai Bà Trưng, Hà Nội"},
+        { icon: <SiNamecheap size={20} />, text: "Tên cửa hàng: Long Store" },
+        { icon: <FaPhoneAlt size={20} />, text: "Điện thoại: 1234 567890" },
+        { icon: <MdEmail size={20} />, text: "Email: zluffyz2002@gmail.com" },
+        { icon: <FaLocationDot size={20} />, text: "332 Đ. Nguyễn Trãi, Thanh Xuân, Hà Nội" },
+        { icon: <FaLocationDot size={20} />, text: "161 Đ. Nguyễn Trãi, Thanh Xuân, Hà Nội" },
+        { icon: <FaLocationDot size={20} />, text: "137 P. Minh Khai, Hai Bà Trưng, Hà Nội" },
     ];
 
     const handleChange = (e) => {
-        const {name, value} = e.target;
-        setFormData({...formData, [name]: value});
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const {firstName, lastName, phone, message} = formData;
+        const { firstName, lastName, phone, message } = formData;
 
         if (!firstName || !lastName || !phone || !message) {
             toast.error("Vui lòng điền đầy đủ thông tin!");
@@ -47,6 +49,8 @@ const Contact = () => {
         setTimeout(() => {
             toast.success("Tin nhắn đã được gửi đến admin thành công!");
             setLoading(false);
+
+            router.push('/mail-success');
 
             setFormData({
                 firstName: '',
@@ -76,7 +80,7 @@ const Contact = () => {
 
     return (
         <>
-            <Breadcrumb title={"Liên hệ"} pages={["Liên hệ"]}/>
+            <Breadcrumb title={"Liên hệ"} pages={["Liên hệ"]} />
 
             <section className="overflow-hidden py-20 bg-gray-2">
                 <div className="max-w-[1170px] w-full mx-auto px-4 sm:px-8 xl:px-0">
@@ -177,9 +181,8 @@ const Contact = () => {
                                 >
                                     {loading ? (
                                         <span className="flex items-center">
-                                            <svg className="animate-spin h-5 w-5 mr-3 ...">
-                                                <circle
-                                                    className="border-t-2 border-b-2 border-white border-opacity-50"/>
+                                            <svg className="animate-spin h-5 w-5 mr-3">
+                                                <circle className="border-t-2 border-b-2 border-white border-opacity-50" />
                                             </svg>
                                             Đang gửi...
                                         </span>
@@ -204,7 +207,6 @@ const Contact = () => {
                         ))}
                     </div>
                 </div>
-
             </section>
         </>
     );
