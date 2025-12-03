@@ -238,11 +238,11 @@ const Footer = () => {
                                     Giỏ hàng
                                 </a>
                             </li>
-                            <li>
-                                <a className="ease-out duration-200 hover:text-blue" href="/wishlist">
-                                    Danh sách yêu thích
-                                </a>
-                            </li>
+                            {/*<li>*/}
+                            {/*    <a className="ease-out duration-200 hover:text-blue" href="/wishlist">*/}
+                            {/*        Danh sách yêu thích*/}
+                            {/*    </a>*/}
+                            {/*</li>*/}
                             <li>
                                 <a className="ease-out duration-200 hover:text-blue" href="/shop-with-sidebar">
                                     Cửa hàng
