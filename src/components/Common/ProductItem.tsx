@@ -1,11 +1,10 @@
 "use client";
+
 import React from "react";
 import Image from "next/image";
 import {Product} from "@/types/product";
 import {useModalContext} from "@/app/context/QuickViewModalContext";
 import {updateQuickView} from "@/redux/features/quickView-slice";
-import {addItemToCart} from "@/redux/features/cart-slice";
-import {addItemToWishlist} from "@/redux/features/wishlist-slice";
 import {updateproductDetails} from "@/redux/features/product-details";
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "@/redux/store";
@@ -25,27 +24,18 @@ const ProductItem = ({item}: { item: Product }) => {
 
     // add to cart
     const handleAddToCart = () => {
-        dispatch(
-            addItemToCart({
-                ...item,
-                quantity: 1,
-            })
-        );
+        console.log("addToCart");
     };
 
     const handleItemToWishList = () => {
-        dispatch(
-            addItemToWishlist({
-                ...item,
-                status: "available",
-                quantity: 1,
-            })
-        );
+        console.log("itemToWishList");
     };
 
     const handleProductDetails = () => {
         dispatch(updateproductDetails({...item}));
     };
+
+    const hasDifferentPrices = item.maxPrice && item.price !== item.maxPrice;
 
     return (
         <div className="group">
@@ -92,10 +82,27 @@ const ProductItem = ({item}: { item: Product }) => {
                 <Link href="/shop-details"> {item.title} </Link>
             </h3>
 
-            <span className="flex items-center gap-2 font-medium text-lg">
-                <span className="text-dark">${item.discountedPrice}</span>
-                <span className="text-dark-4 line-through">${item.price}</span>
-            </span>
+            <div className="flex items-center gap-2 font-medium text-lg">
+                {item.discount && item.discount > 0 ? (
+                    <>
+                        <span className="text-red-600">
+                            {hasDifferentPrices && <span className="text-sm mr-1">Từ</span>}
+                            {item.discountedPrice.toLocaleString('vi-VN')}₫
+                        </span>
+                        <span className="text-dark-4 line-through text-sm">
+                            {item.price.toLocaleString('vi-VN')}₫
+                        </span>
+                        <span className="bg-red-600 text-red text-xs px-2 py-0.5 rounded">
+                            -{item.discount}%
+                        </span>
+                    </>
+                ) : (
+                    <span className="text-dark">
+                        {hasDifferentPrices && <span className="text-sm mr-1">Từ</span>}
+                        {item.price.toLocaleString('vi-VN')}₫
+                    </span>
+                )}
+            </div>
         </div>
     );
 };

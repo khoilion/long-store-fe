@@ -17,26 +17,52 @@ const NewArrival = () => {
                 page: 1,
                 limit: 8
             });
-            console.log(res, "okla");
             if (res?.data) {
-                const mappedProducts: Product[] = res.data.map((item: any) => ({
-                    id: item.id,
-                    title: item.name || '',
-                    price: parseFloat(item.price) || 0,
-                    discountedPrice: parseFloat(item.price) || 0,
-                    imgs: {
-                        thumbnails: item.images && item.images.length > 0
-                            ? [item.images[0], item.images[1] || item.images[0]]
-                            : ['/images/products/product-1-sm-1.png', '/images/products/product-1-sm-2.png'],
-                        previews: item.images && item.images.length > 0
-                            ? [item.images[0], item.images[1] || item.images[0]]
-                            : ['/images/products/product-1-bg-1.png', '/images/products/product-1-bg-2.png'],
-                    },
-                    category: item.category,
-                    description: item.description,
-                    specifications: item.specifications,
-                    status: item.status,
-                }));
+                const mappedProducts: Product[] = res.data.map((item: any) => {
+                    const variants = item.variants || [];
+
+                    let minPrice = 0;
+                    let maxPrice = 0;
+
+                    if (variants.length > 0) {
+                        const prices = variants.map((v: any) => {
+                            const p = parseFloat(v.price);
+                            return isNaN(p) ? 0 : p;
+                        }).filter((p: number) => p > 0);
+
+                        if (prices.length > 0) {
+                            minPrice = Math.min(...prices);
+                            maxPrice = Math.max(...prices);
+                        }
+                    }
+
+                    const discount = parseFloat(item.discount) || 0;
+                    const minDiscountedPrice = discount > 0 ? minPrice * (1 - discount / 100) : minPrice;
+                    const maxDiscountedPrice = discount > 0 ? maxPrice * (1 - discount / 100) : maxPrice;
+
+                    return {
+                        id: item.id,
+                        title: item.name || '',
+                        price: minPrice,
+                        maxPrice: maxPrice,
+                        discountedPrice: minDiscountedPrice,
+                        maxDiscountedPrice: maxDiscountedPrice,
+                        discount: discount,
+                        imgs: {
+                            thumbnails: item.images && item.images.length > 0
+                                ? [item.images[0], item.images[1] || item.images[0]]
+                                : ['/images/products/product-1-sm-1.png', '/images/products/product-1-sm-2.png'],
+                            previews: item.images && item.images.length > 0
+                                ? [item.images[0], item.images[1] || item.images[0]]
+                                : ['/images/products/product-1-bg-1.png', '/images/products/product-1-bg-2.png'],
+                        },
+                        category: item.category,
+                        description: item.description,
+                        specifications: item.specifications,
+                        status: item.status,
+                        variants: variants,
+                    };
+                });
 
                 setProducts(mappedProducts);
             }
