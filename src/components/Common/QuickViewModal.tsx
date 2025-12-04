@@ -168,8 +168,8 @@ const QuickViewModal = () => {
                             {/* Badge giảm giá */}
                             {product.discount > 0 && (
                                 <span
-                                    className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-red-600 mb-6.5">
-                                    GIẢM {product.discount}%
+                                    className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-green mb-6.5">
+                                    GIẢM ĐẾN {product.discount}%
                                 </span>
                             )}
 
