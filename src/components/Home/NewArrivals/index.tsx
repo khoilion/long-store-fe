@@ -17,6 +17,7 @@ const NewArrival = () => {
                 page: 1,
                 limit: 8
             });
+            console.log(res, "OKLA")
             if (res?.data) {
                 const mappedProducts: Product[] = res.data.map((item: any) => {
                     const variants = item.variants || [];

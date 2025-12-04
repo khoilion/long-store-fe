@@ -13,6 +13,7 @@ const QuickViewModal = () => {
     const {isModalOpen, closeModal} = useModalContext();
     const {openPreviewModal} = usePreviewSlider();
     const [quantity, setQuantity] = useState(1);
+    const [selectedVariant, setSelectedVariant] = useState<any>(null);
 
     const dispatch = useDispatch<AppDispatch>();
 
@@ -21,17 +22,26 @@ const QuickViewModal = () => {
 
     const [activePreview, setActivePreview] = useState(0);
 
+    // Chọn variant đầu tiên khi mở modal
+    useEffect(() => {
+        if (product.variants && product.variants.length > 0) {
+            setSelectedVariant(product.variants[0]);
+        }
+    }, [product]);
+
     // preview modal
     const handlePreviewSlider = () => {
         dispatch(updateproductDetails(product));
-
         openPreviewModal();
     };
 
     // add to cart
     const handleAddToCart = () => {
-        console.log("addToCart");
-
+        console.log("addToCart", {
+            product,
+            selectedVariant,
+            quantity
+        });
         closeModal();
     };
 
@@ -49,10 +59,21 @@ const QuickViewModal = () => {
 
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
-
             setQuantity(1);
         };
     }, [isModalOpen, closeModal]);
+
+    // Kiểm tra có nhiều variants với giá khác nhau không
+    const hasDifferentPrices = product.maxPrice && product.price !== product.maxPrice;
+
+    // Tính giá hiển thị dựa trên variant được chọn
+    const displayPrice = selectedVariant
+        ? parseFloat(selectedVariant.price)
+        : product.price;
+
+    const displayDiscountedPrice = product.discount > 0
+        ? displayPrice * (1 - product.discount / 100)
+        : displayPrice;
 
     return (
         <div
@@ -144,15 +165,19 @@ const QuickViewModal = () => {
                         </div>
 
                         <div className="max-w-[445px] w-full">
-                              <span
-                                  className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-green mb-6.5">
-                                SALE 20% OFF
-                              </span>
+                            {/* Badge giảm giá */}
+                            {product.discount > 0 && (
+                                <span
+                                    className="inline-block text-custom-xs font-medium text-white py-1 px-3 bg-red-600 mb-6.5">
+                                    GIẢM {product.discount}%
+                                </span>
+                            )}
 
                             <h3 className="font-semibold text-xl xl:text-heading-5 text-dark mb-4">
                                 {product.title}
                             </h3>
 
+                            {/* Trạng thái sản phẩm */}
                             <div className="flex flex-wrap items-center gap-5 mb-6">
                                 <div className="flex items-center gap-2">
                                     <svg
@@ -179,34 +204,74 @@ const QuickViewModal = () => {
                                         </defs>
                                     </svg>
 
-                                    <span className="font-medium text-dark"> In Stock </span>
+                                    <span className="font-medium text-dark">
+                                        {product.status === 'IN_STOCK' ? 'Còn hàng' : 'Hết hàng'}
+                                    </span>
                                 </div>
                             </div>
 
-                            <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                industry. Lorem Ipsum has.
+                            {/* Mô tả sản phẩm */}
+                            <p className="text-body-color mb-6">
+                                {product.description || 'Chưa có mô tả sản phẩm'}
                             </p>
 
-                            <div className="flex flex-wrap justify-between gap-5 mt-6 mb-7.5">
+                            {/* Chọn dung lượng */}
+                            {product.variants && product.variants.length > 0 && (
+                                <div className="mb-6">
+                                    <h4 className="font-semibold text-lg text-dark mb-3">
+                                        Dung lượng
+                                    </h4>
+                                    <div className="flex flex-wrap gap-3">
+                                        {product.variants.map((variant: any, index: number) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => setSelectedVariant(variant)}
+                                                className={`px-4 py-2 rounded-md border-2 font-medium transition-all ${
+                                                    selectedVariant?.storage === variant.storage
+                                                        ? 'border-blue bg-blue text-white'
+                                                        : 'border-gray-3 bg-white text-dark hover:border-blue'
+                                                } ${variant.quantity === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                                disabled={variant.quantity === 0}
+                                            >
+                                                {variant.storage}
+                                                {variant.quantity === 0 && ' (Hết hàng)'}
+                                            </button>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            <div className="flex flex-wrap justify-between gap-5 mb-7.5">
+                                {/* Giá */}
                                 <div>
                                     <h4 className="font-semibold text-lg text-dark mb-3.5">
-                                        Price
+                                        Giá
                                     </h4>
 
                                     <span className="flex items-center gap-2">
-                                        <span className="font-semibold text-dark text-xl xl:text-heading-4">
-                                          ${product.discountedPrice}
-                                        </span>
-                                        <span className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
-                                          ${product.price}
-                                        </span>
+                                        {product.discount > 0 ? (
+                                            <>
+                                                <span className="font-semibold text-red-600 text-xl xl:text-heading-4">
+                                                    {displayDiscountedPrice.toLocaleString('vi-VN')}₫
+                                                </span>
+                                                <span
+                                                    className="font-medium text-dark-4 text-lg xl:text-2xl line-through">
+                                                    {displayPrice.toLocaleString('vi-VN')}₫
+                                                </span>
+                                            </>
+                                        ) : (
+                                            <span className="font-semibold text-dark text-xl xl:text-heading-4">
+                                                {hasDifferentPrices && <span className="text-sm mr-1">Từ</span>}
+                                                {displayPrice.toLocaleString('vi-VN')}₫
+                                            </span>
+                                        )}
                                     </span>
                                 </div>
 
+                                {/* Số lượng */}
                                 <div>
                                     <h4 className="font-semibold text-lg text-dark mb-3.5">
-                                        Quantity
+                                        Số lượng
                                     </h4>
 
                                     <div className="flex items-center gap-3">
@@ -214,7 +279,7 @@ const QuickViewModal = () => {
                                             onClick={() => quantity > 1 && setQuantity(quantity - 1)}
                                             aria-label="button for remove product"
                                             className="flex items-center justify-center w-10 h-10 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
-                                            disabled={quantity < 0 && true}
+                                            disabled={quantity <= 1}
                                         >
                                             <svg
                                                 className="fill-current"
@@ -234,16 +299,20 @@ const QuickViewModal = () => {
                                         </button>
 
                                         <span
-                                            className="flex items-center justify-center w-20 h-10 rounded-[5px] border border-gray-4 bg-white font-medium text-dark"
-                                            x-text="quantity"
-                                        >
-                                          {quantity}
+                                            className="flex items-center justify-center w-20 h-10 rounded-[5px] border border-gray-4 bg-white font-medium text-dark">
+                                            {quantity}
                                         </span>
 
                                         <button
-                                            onClick={() => setQuantity(quantity + 1)}
+                                            onClick={() => {
+                                                const maxQty = selectedVariant?.quantity || 0;
+                                                if (quantity < maxQty) {
+                                                    setQuantity(quantity + 1);
+                                                }
+                                            }}
                                             aria-label="button for add product"
                                             className="flex items-center justify-center w-10 h-10 rounded-[5px] bg-gray-2 text-dark ease-out duration-200 hover:text-blue"
+                                            disabled={quantity >= (selectedVariant?.quantity || 0)}
                                         >
                                             <svg
                                                 className="fill-current"
@@ -268,20 +337,28 @@ const QuickViewModal = () => {
                                             </svg>
                                         </button>
                                     </div>
+
+                                    {/* Hiển thị số lượng còn lại */}
+                                    {selectedVariant && (
+                                        <p className="text-sm text-body-color mt-2">
+                                            Còn lại: {selectedVariant.quantity} sản phẩm
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
+                            {/* Buttons */}
                             <div className="flex flex-wrap items-center gap-4">
                                 <button
-                                    disabled={quantity === 0 && true}
+                                    disabled={!selectedVariant || selectedVariant.quantity === 0 || quantity === 0}
                                     onClick={() => handleAddToCart()}
-                                    className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark`}
+                                    className={`inline-flex font-medium text-white bg-blue py-3 px-7 rounded-md ease-out duration-200 hover:bg-blue-dark disabled:opacity-50 disabled:cursor-not-allowed`}
                                 >
-                                    Add to Cart
+                                    Thêm vào giỏ hàng
                                 </button>
 
                                 <button
-                                    className={`inline-flex items-center gap-2 font-medium text-white bg-dark py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-95 `}
+                                    className={`inline-flex items-center gap-2 font-medium text-white bg-dark py-3 px-6 rounded-md ease-out duration-200 hover:bg-opacity-95`}
                                 >
                                     <svg
                                         className="fill-current"
@@ -298,7 +375,7 @@ const QuickViewModal = () => {
                                             fill=""
                                         />
                                     </svg>
-                                    Add to Wishlist
+                                    Yêu thích
                                 </button>
                             </div>
                         </div>
@@ -309,4 +386,4 @@ const QuickViewModal = () => {
     );
 };
 
-export default QuickViewModal;
+export default QuickViewModal
