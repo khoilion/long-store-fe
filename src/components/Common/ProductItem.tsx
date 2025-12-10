@@ -93,7 +93,7 @@ const ProductItem = ({item}: { item: Product }) => {
                             {item.price.toLocaleString('vi-VN')}₫
                         </span>
                         <span className="bg-red-600 text-red text-xs px-2 py-0.5 rounded">
-                            -{item.discount}%
+                            [ -{item.discount}% ]
                         </span>
                     </>
                 ) : (
