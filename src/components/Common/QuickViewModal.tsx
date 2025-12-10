@@ -100,7 +100,7 @@ const QuickViewModal = () => {
                                         <button
                                             onClick={() => setActivePreview(key)}
                                             key={key}
-                                            className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg bg-gray-1 ease-out duration-200 hover:border-2 hover:border-blue ${
+                                            className={`flex items-center justify-center w-20 h-20 overflow-hidden rounded-lg border ease-out duration-200 hover:border-2 hover:border-blue ${
                                                 activePreview === key && "border-2 border-blue"
                                             }`}
                                         >
@@ -116,7 +116,7 @@ const QuickViewModal = () => {
                                 </div>
 
                                 <div
-                                    className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px] bg-gray-1 rounded-lg border border-gray-3">
+                                    className="relative z-1 overflow-hidden flex items-center justify-center w-full sm:min-h-[508px]  rounded-lg border border-gray-3">
                                     <Image
                                         src={product?.imgs?.previews?.[activePreview] || '/default-image.jpg'}
                                         alt="products-details"
